@@ -12,15 +12,25 @@ export class PollDetailsComponent {
   $stateParams;
   $scope;
   $state;
+  $location;
   pollId;
   poll;
+  Auth;
+  absurl: string;
+  votefor;
+  voteforCustom;
 
-  constructor($scope, socket, $stateParams, $state, $http) {
+  getCurrentUser: Function;
+
+
+  constructor($scope, socket, $stateParams, $state, $http, Auth, $location) {
     this.$stateParams = $stateParams;
     this.pollId = $stateParams.pollId;
     this.socket = socket;
     this.$http = $http;
     this.$state = $state;
+    this.getCurrentUser = Auth.getCurrentUserSync;
+    this.absurl = 'https://twitter.com/intent/tweet?url=' + encodeURI($location.absUrl().split('?')[0]);
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('poll');
@@ -34,6 +44,23 @@ export class PollDetailsComponent {
       }, () => this.$state.go("main")
     );
   }
+
+  submitVote() {
+    var votefor = "";
+    if (this.votefor && this.votefor !== "===custom-option") {
+      votefor = this.votefor;
+    } else if (this.votefor === "===custom-option" && this.voteforCustom) {
+      votefor = this.voteforCustom;
+    }
+
+    if (votefor) {
+      console.info(votefor);
+      this.poll.results[votefor] = this.poll.results[votefor] ? this.poll.results[votefor] + 1 : 1;
+      this.$http.put('/api/polls/' + this.pollId,this.poll);
+    } else {
+      window.alert("You must choose which option to vote for.");
+    }
+  };
 }
 
 export default angular.module('pollAppApp.pollDetails', [uiRouter])

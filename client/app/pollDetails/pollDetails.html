@@ -1,39 +1,60 @@
+<script>window.twttr = (function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function (f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
 <div class="container">
   {{pollDetailsCtrl.poll}}
   <div class="jumbotron">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-md-4">
         <p>{{pollDetailsCtrl.poll.title}}</p>
-        <form ng-submit="submitVote()">
+        <form>
           <div class="form-group">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-xs-12 col-md-12">
                 <div class="form-group">
                   <label for="votefor">I'd like to vote for...: </label>
                   <select id="votefor" class="form-control" ng-model="pollDetailsCtrl.votefor">
                     <option value="" disabled selected hidden>Choose an option...:</option>
-                    <option ng-repeat="option in pollDetailsCtrl.poll.results" ng-value="option">{{option}}</option>
-                    <option ng-show="userId" value="===custom-option">I'd like a custom option</option>
+                    <option ng-repeat="(option,value) in pollDetailsCtrl.poll.results" ng-value="option">{{option}}</option>
+                    <option ng-show="pollDetailsCtrl.getCurrentUser()" value="===custom-option">I'd like a custom
+                      option
+                    </option>
                   </select>
-                  <div class="form-group" ng-show="votefor === '===custom-option'"><label for="custom-option">Vote with
-                    my
-                    own option: </label><input id="custom-option" type="text" ng-model="voteforCustom" ng-trim="true">
+                  <div class="form-group" ng-show="pollDetailsCtrl.votefor === '===custom-option'">
+                    <label for="custom-option">Vote with my own option: </label>
+                    <input id="custom-option" type="text"
+                           class="form-control"
+                           ng-model="pollDetailsCtrl.voteforCustom"
+                           ng-trim="true">
                   </div>
                 </div>
+                <input class="btn btn-primary btn-block" value="Submit" ng-click="pollDetailsCtrl.submitVote()">
+
+                <a ng-href="{{pollDetailsCtrl.absurl}}" class="btn  btn-info btn-block">Share on Twitter</a>
+
               </div>
-              <div class="col-xs-12">
-                <input class="btn btn-primary btn-block" type="submit" value="Submit">
-              </div>
+
+
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-xs-12">
-            <blaze-template name="shareitEnh"></blaze-template>
-          </div>
-        </div>
+
       </div>
-      <div class="col-sm-8">
+      <div class="col-md-8">
         <canvas class="chart chart-doughnut" chart-data="chartData" chart-labels="chartLabels"
                 chart-legend="true"></canvas>
         <button class="btn btn-block btn-danger" ng-click="removePoll()" ng-show="isPollOwner">Remove this Poll</button>
