@@ -13,7 +13,7 @@
                     <option value="" disabled selected hidden>Choose an option...:</option>
                     <option ng-repeat="(option,value) in pollDetailsCtrl.poll.results" ng-value="option">{{option}}
                     </option>
-                    <option ng-show="pollDetailsCtrl.getCurrentUser()" value="===custom-option">I'd like a custom
+                    <option ng-show="pollDetailsCtrl.getCurrentUser()._id" value="===custom-option">I'd like a custom
                       option
                     </option>
                   </select>
@@ -25,7 +25,8 @@
                            ng-trim="true">
                   </div>
                 </div>
-                <input class="btn btn-primary btn-block" value="Submit" ng-click="pollDetailsCtrl.submitVote()">
+                <input class="btn btn-primary btn-block" value="Submit" ng-show="pollDetailsCtrl.getCurrentUser()._id"
+                       ng-click="pollDetailsCtrl.submitVote()">
 
                 <a ng-href="{{pollDetailsCtrl.absurl}}" class="btn  btn-info btn-block">Share on Twitter</a>
 

@@ -8,6 +8,8 @@ import 'angular-socket-io';
 
 const uiRouter = require('angular-ui-router');
 const uiBootstrap = require('angular-ui-bootstrap');
+const  chartJs = require('angular-chart.js');
+
 // const ngMessages = require('angular-messages');
 // import ngValidationMatch from 'angular-validation-match';
 
@@ -26,6 +28,7 @@ import socket from '../components/socket/socket.service';
 import newpool from './newpoll/newpoll.component';
 import pollDetails from './pollDetails/pollDetails.component';
 import myPolls from './myPolls/myPolls.component';
+
 import './app.less';
 
 angular.module('pollAppApp', [
@@ -37,7 +40,7 @@ angular.module('pollAppApp', [
 
   uiRouter,
   uiBootstrap,
-
+  chartJs,
   _Auth,
   account,
   admin,

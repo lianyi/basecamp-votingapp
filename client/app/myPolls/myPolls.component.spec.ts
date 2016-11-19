@@ -1,14 +1,14 @@
 'use strict';
 
-describe('Component: NewpollComponent', function() {
+describe('Component: MyPollsComponent', function() {
   // load the controller's module
-  beforeEach(module('pollAppApp.newpoll'));
+  beforeEach(module('pollAppApp.myPolls'));
 
-  var NewpollComponent;
+  var MyPollsComponent;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function($componentController) {
-    NewpollComponent = $componentController('newpoll', {});
+    MyPollsComponent = $componentController('myPolls', {});
   }));
 
   it('should ...', function() {

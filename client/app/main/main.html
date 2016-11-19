@@ -5,8 +5,10 @@
       <div>
         <p ng-show="$ctrl.showMyPollsOnly">Below are polls you own.</p>
         <p ng-hide="$ctrl.showMyPollsOnly">Below are all polls.</p>
-        <p>Select a poll to see the results and vote<span ng-hide="$ctrl.getCurrentUser()"> or sign-in to make a new poll.</span>
-          <span> or </span><a href="/newpoll" ng-show="$ctrl.getCurrentUser()">make a new poll!</a></p>
+        <p>Select a poll to see the results and vote<span ng-hide="$ctrl.getCurrentUser()._id"> or
+          <a ui-sref="login">sign-in</a>
+          to make a new poll.</span>
+          <span ng-show="$ctrl.getCurrentUser()._id"> or <a ui-sref="newpoll">make a new poll!</a> </span></p>
         <ul class="list-group">
           <a class="list-group-item" ng-href="/pollDetails/{{poll._id}}"
              ng-repeat="poll in $ctrl.polls | filter: ($ctrl.showMyPollsOnly) && {owner:$ctrl.getCurrentUser()._id} || ''">{{poll.title}}</a>

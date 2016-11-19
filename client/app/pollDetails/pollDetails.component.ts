@@ -37,10 +37,21 @@ export class PollDetailsComponent {
     });
   }
 
+
+  updateChart(){
+    this.$scope.chartLabels = Object.keys(this.poll.results);
+    this.$scope.chartData = [];
+    this.$scope.isPollOwner = (this.poll.owner === this.getCurrentUser()._id);
+
+    for (var i = 0; i < this.$scope.chartLabels.length; i++) {
+      this.$scope.chartData.push(this.poll.results[this.$scope.chartLabels[i]]);
+    }
+  }
   $onInit() {
     this.$http.get('/api/polls/' + this.pollId).then(response => {
         this.poll = response.data;
         this.socket.syncUpdates('poll', this.poll);
+        this.updateChart();
       }, () => this.$state.go("main")
     );
   }
@@ -57,6 +68,7 @@ export class PollDetailsComponent {
       console.info(votefor);
       this.poll.results[votefor] = this.poll.results[votefor] ? this.poll.results[votefor] + 1 : 1;
       this.$http.put('/api/polls/' + this.pollId,this.poll);
+      this.updateChart();
     } else {
       window.alert("You must choose which option to vote for.");
     }

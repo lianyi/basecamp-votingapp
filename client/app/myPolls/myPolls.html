@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h1>My Polls</h1>
+      <div>
+        <p ng-show="myPollsCtrl.showMyPollsOnly">Below are polls you own.</p>
+        <p ng-hide="myPollsCtrl.showMyPollsOnly">Below are all polls.</p>
+        <p>Select a poll to see the results and vote<span ng-hide="myPollsCtrl.getCurrentUser()._id"> or sign-in to make a new poll.</span>
+          <span> or </span><a href="/newpoll" ng-show="myPollsCtrl.getCurrentUser()._id">make a new poll!</a></p>
+        <ul class="list-group">
+          <a class="list-group-item" ng-href="/pollDetails/{{poll._id}}"
+             ng-repeat="poll in myPollsCtrl.polls | filter: (myPollsCtrl.showMyPollsOnly) && {owner:myPollsCtrl.getCurrentUser()._id} || ''">{{poll.title}}</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
