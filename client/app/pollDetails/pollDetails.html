@@ -30,6 +30,10 @@
 
                 <a ng-href="{{pollDetailsCtrl.absurl}}" class="btn  btn-info btn-block">Share on Twitter</a>
 
+                <button class="btn btn-block btn-danger" ng-click="pollDetailsCtrl.removePoll()"
+                        ng-show="pollDetailsCtrl.isPollOwner">Remove this Poll
+                </button>
+
               </div>
 
 
@@ -38,10 +42,10 @@
         </form>
 
       </div>
-      <div class="col-md-8">
-        <canvas class="chart chart-doughnut" chart-data="chartData" chart-labels="chartLabels"
+      <div class="col-md-4">
+        <canvas class="chart chart-doughnut" chart-data="pollDetailsCtrl.chartData"
+                chart-labels="pollDetailsCtrl.chartLabels"
                 chart-legend="true"></canvas>
-        <button class="btn btn-block btn-danger" ng-click="removePoll()" ng-show="isPollOwner">Remove this Poll</button>
       </div>
     </div>
   </div>
