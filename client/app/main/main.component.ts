@@ -5,7 +5,7 @@ import routing from './main.routes';
 export class MainController {
   $http;
   socket;
-  awesomeThings = [];
+  polls = [];
   newThing = '';
 
   /*@ngInject*/
@@ -13,35 +13,35 @@ export class MainController {
     this.$http = $http;
     this.socket = socket;
 
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('poll');
     });
   }
 
   $onInit() {
-    this.$http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-      this.socket.syncUpdates('thing', this.awesomeThings);
+    this.$http.get('/api/polls').then(response => {
+      this.polls = response.data;
+      this.socket.syncUpdates('poll', this.polls);
     });
   }
 
   addThing() {
     if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
+      this.$http.post('/api/polls', {name: this.newThing});
       this.newThing = '';
     }
   }
 
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
+  deleteThing(poll) {
+    this.$http.delete('/api/polls/' + poll._id);
   }
 }
 
 export default angular.module('pollAppApp.main', [
   uiRouter])
-    .config(routing)
-    .component('main', {
-      template: require('./main.html'),
-      controller: MainController
-    })
-    .name;
+  .config(routing)
+  .component('main', {
+    template: require('./main.html'),
+    controller: MainController
+  })
+  .name;
