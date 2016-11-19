@@ -6,13 +6,14 @@ export class MainController {
   $http;
   socket;
   polls = [];
-  newThing = '';
-
+  Auth;
+  getCurrentUser: Function;
+  showMyPollsOnly: boolean = false;
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Auth) {
     this.$http = $http;
     this.socket = socket;
-
+    this.getCurrentUser = Auth.getCurrentUserSync;
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('poll');
     });
@@ -25,16 +26,6 @@ export class MainController {
     });
   }
 
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/polls', {name: this.newThing});
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(poll) {
-    this.$http.delete('/api/polls/' + poll._id);
-  }
 }
 
 export default angular.module('pollAppApp.main', [

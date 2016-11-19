@@ -10,16 +10,20 @@ export class NewpollComponent {
   /*@ngInject*/
   $http;
   $state;
+  Auth;
   poll;
 
-  constructor($http, $state) {
+  constructor($http, $state, Auth) {
     this.$http = $http;
     this.$state = $state;
+    this.Auth = Auth;
   }
 
   addNewPoll() {
     var me = this;
+    var owner = this.Auth.getCurrentUserSync()._id;
     if (me.poll) {
+      me.poll.owner = owner;
       if (angular.isArray(me.poll.results)) {
         var n = {};
         me.poll.results.forEach(function (d) {
@@ -27,7 +31,7 @@ export class NewpollComponent {
         });
         me.poll.results = n;
       }
-      console.info(me.poll);
+
       me.$http.post('/api/polls', this.poll).then(function (res) {
         me.$state.go("pollDetails", {pollId: res.data._id}, {reload: true});
       });

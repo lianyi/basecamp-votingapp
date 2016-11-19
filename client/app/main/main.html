@@ -3,12 +3,13 @@
     <div class="jumbotron text-center">
       <h1>Voting App</h1>
       <div>
-        <p ng-show="showMyPollsOnly">Below are polls you own.</p>
-        <p ng-hide="showMyPollsOnly">Below are polls hosted by Voting App.</p>
-        <p>Select a poll to see the results ! </p>
+        <p ng-show="$ctrl.showMyPollsOnly">Below are polls you own.</p>
+        <p ng-hide="$ctrl.showMyPollsOnly">Below are all polls.</p>
+        <p>Select a poll to see the results and vote<span ng-hide="$ctrl.getCurrentUser()"> or sign-in to make a new poll.</span>
+          <span> or </span><a href="/newpoll" ng-show="$ctrl.getCurrentUser()">make a new poll!</a></p>
         <ul class="list-group">
-          <a class="list-group-item" ng-href="/polls/{{poll._id}}"
-             ng-repeat="poll in $ctrl.polls ">{{poll.title}} </a>
+          <a class="list-group-item" ng-href="/pollDetails/{{poll._id}}"
+             ng-repeat="poll in $ctrl.polls | filter: ($ctrl.showMyPollsOnly) && {owner:$ctrl.getCurrentUser()._id} || ''">{{poll.title}}</a>
         </ul>
       </div>
     </div>

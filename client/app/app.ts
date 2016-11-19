@@ -25,6 +25,7 @@ import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import newpool from './newpoll/newpoll.component';
 import pollDetails from './pollDetails/pollDetails.component';
+import myPolls from './myPolls/myPolls.component';
 import './app.less';
 
 angular.module('pollAppApp', [
@@ -47,7 +48,8 @@ angular.module('pollAppApp', [
   socket,
   util,
   newpool,
-  pollDetails
+  pollDetails,
+  myPolls
 ])
   .config(routeConfig)
   .run(function ($rootScope, $location, Auth) {
