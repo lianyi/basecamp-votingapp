@@ -23,8 +23,8 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-
-
+import newpool from './newpoll/newpoll.component';
+import pollDetails from './pollDetails/pollDetails.component';
 import './app.less';
 
 angular.module('pollAppApp', [
@@ -39,20 +39,23 @@ angular.module('pollAppApp', [
 
   _Auth,
   account,
-  admin,  navbar,
+  admin,
+  navbar,
   footer,
   main,
   constants,
   socket,
-  util
+  util,
+  newpool,
+  pollDetails
 ])
   .config(routeConfig)
-  .run(function($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, Auth) {
     'ngInject';
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$stateChangeStart', function(event, next) {
-      Auth.isLoggedIn(function(loggedIn) {
-        if(next.authenticate && !loggedIn) {
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+      Auth.isLoggedIn(function (loggedIn) {
+        if (next.authenticate && !loggedIn) {
           $location.path('/login');
         }
       });

@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Make a new poll!</h1>
+  <form role="form" class="jumbotron">
+
+    <div class="row">
+      <div class="form-group col-lg-1 ">
+        <label>Title:
+          <input class="form-control input-md " type="text" ng-model="newpollCtrl.poll.title" ng-trim="true"
+                 required>
+        </label>
+        <div class="alert alert-danger" ng-show="!newpollCtrl.poll.title">required</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-lg-1 ">
+        <label for="results">Options (seperated by line):</label>
+        <textarea id=results class="form-control input-md "
+                  ng-model="newpollCtrl.poll.results" ng-list="&#10;"
+                  ng-trim="false"
+                  rows="4" required></textarea>
+        <div class="alert alert-danger" ng-show="newpollCtrl.poll.results && newpollCtrl.poll.results.length<=1">minimum 2 required</div>
+      </div>
+      <div class="form-group col-lg-1 ">
+        <button class="btn btn-primary" ng-click="newpollCtrl.addNewPoll()">Make!</button>
+      </div>
+    </div>
+
+  </form>
+</div>
