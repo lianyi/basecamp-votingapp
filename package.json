@@ -142,11 +142,12 @@
     "webpack-stream": "^3.2.0"
   },
   "engines": {
-    "node": "^6.2.2",
+    "node": "^6.6.0",
     "npm": "^3.9.5"
   },
   "scripts": {
     "test": "gulp test",
+    "preinstall":"npm install typings -g",
     "postinstall": "./node_modules/.bin/typings install",
     "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update",
     "start": "node server"
